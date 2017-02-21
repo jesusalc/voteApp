@@ -17,7 +17,7 @@ import Ratings from './app/db/schemas/ratingsSchema';
 
 import initialSayings from './config/sayings.json';
 
-app.set('port', 5000);
+app.set('port', 3000);
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/voteApp');
