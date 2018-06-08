@@ -8,6 +8,8 @@ import bodyParser from 'body-parser'
 import http from 'http'
 import path from 'path'
 import schemas from './app/middleware/obtain-connections'
+import models from './app/models'
+
 const app = express()
 
 
@@ -25,9 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname + '/app/build')));
 
-const { findUserByName, findRatingsofUser } = require('./app/models');
-
-require('./app/routes')(app, schemas);
+require('./app/routes')(app, schemas, models);
 
 /**
  * Start Server

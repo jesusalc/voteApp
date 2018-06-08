@@ -18,5 +18,8 @@ const findRatingsofUser = (userId) => {
     })
 };
 
-
-module.exports = { findUserByName, findRatingsofUser }
+const models =  {
+  findUserByName: findUserByName,
+  findRatingsofUser: findRatingsofUser
+}
+export default models;

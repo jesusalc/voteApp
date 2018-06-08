@@ -1,6 +1,6 @@
 'use strict'
 import path from 'path'
-module.exports = (router, schemas)  => {
+module.exports = (router, schemas, models)  => {
     router.get('/sayings/:user', (req, res) => {
         res.sendFile(path.join(__dirname + '/build/index.html'))
     })
@@ -12,13 +12,14 @@ module.exports = (router, schemas)  => {
     router.get('/initializeSayings', (req, res) => {
         const initialSayings = require('../config/sayings.json')
 
-        schemas.Sayings.insertMany(initialSayings.sayings, (err, document) => {
+        schemas.Sayings.insertMany(
+            initialSayings.sayings, (err, document) => {
             res.send(err)
         })
     })
 
     router.get('/api/user', (req, res) => {
-        findUserByName(req.query.name)
+        models.findUserByName(req.query.name)
             .then(foundUser => {
                 return foundUser
             }).then(user => {
@@ -37,7 +38,7 @@ module.exports = (router, schemas)  => {
     })
 
     router.get('/api/sayings', (req, res, next) => {
-        findRatingsofUser(req.query.userId)
+        models.findRatingsofUser(req.query.userId)
             .then((sayings) => {
                 const sayingIds = sayings.map((saying) => {
                     return saying.saying
