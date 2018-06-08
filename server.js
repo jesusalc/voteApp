@@ -4,23 +4,39 @@
  * http://expressjs.com/en/starter/generator.html
  */
 
-import express from 'express';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import http from 'http';
-import path from 'path';
-const app = express();
+import express from 'express'
+import mongoose from 'mongoose'
+import processConnection from './app/lib/mongoose-processConnection'
+import bodyParser from 'body-parser'
+import http from 'http'
+import path from 'path'
+const app = express()
 
-import Sayings from './app/db/schemas/sayingsSchema';
-import Users from './app/db/schemas/usersSchema';
-import Ratings from './app/db/schemas/ratingsSchema';
+import sayingsSchema from './app/db/schemas/sayingsSchema'
+const Sayings = processConnection('sayings', sayingsSchema)
+
+import usersSchema from './app/db/schemas/usersSchema'
+const Users = processConnection('users', usersSchema)
+
+import ratingsSchema from './app/db/schemas/ratingsSchema'
+const Ratings = processConnection('ratings', ratingsSchema)
 
 import initialSayings from './config/sayings.json';
 
 app.set('port', 3000);
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/voteApp');
+let options = {
+  //useMongoClient: true,
+  autoIndex: false, // Don't build indexes
+  reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
+  reconnectInterval: 500, // Reconnect every 500ms
+  poolSize: 10, // Maintain up to 10 socket connections
+  // If not connected, return errors immediately rather than waiting for reconnect
+  bufferMaxEntries: 0
+};
+mongoose.connect(process.env.MONGO_URL, options);
+// mongoose.connect('mongodb://localhost/voteApp');
 /**
  * Anything in public can be accessed statically without
  * this express router getting involved
@@ -121,7 +137,8 @@ app.post('/api/rateSaying', function (req,res) {
 /**
  * Start Server
  */
+const port = app.get('port')
+console.info('Listening on http://localhost:' + port);
+http.createServer(app).listen(port);
 
-// http.createServer(app).listen(app.get('port'));
-
-http.createServer(app).listen(app.get('port'), 'localhost');
+//http.createServer(app).listen(app.get('port'), 'localhost');
