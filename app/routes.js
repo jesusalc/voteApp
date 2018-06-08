@@ -10,7 +10,7 @@ module.exports = router => {
      */
 
     router.get('/initializeSayings', function(req, res) {
-        import initialSayings from './config/sayings.json'
+        const initialSayings = require('../config/sayings.json')
 
         Sayings.insertMany(initialSayings.sayings, (err, document) => {
             res.send(err)
