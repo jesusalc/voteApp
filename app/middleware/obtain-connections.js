@@ -27,5 +27,11 @@ mongoose.connect(process.env.MONGO_URL, options);
  * Anything in public can be accessed statically without
  * this express router getting involved
  */
+schemas = {
+  Mongoose: mongoose,
+  Sayings: Sayings,
+  Users: Users,
+  Ratings: Ratings
+}
 
-export default mongoose;
+export default schemas;

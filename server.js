@@ -7,7 +7,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import http from 'http'
 import path from 'path'
-import mongoose from './app/middleware/obtain-connections'
+import schemas from './app/middleware/obtain-connections'
 const app = express()
 
 
@@ -27,13 +27,16 @@ app.use(express.static(path.join(__dirname + '/app/build')));
 
 const { findUserByName, findRatingsofUser } = require('./app/models');
 
-require('./app/routes')(app);
+require('./app/routes')(app, schemas);
 
 /**
  * Start Server
  */
 const port = app.get('port')
-console.info('Listening on http://localhost:' + port);
+console.info('Go to http://127.0.0.1:' + port + '/initializeSayings to load initial Sayings' );
+console.info('' );
+console.info('Listening on http://127.0.0.1:' + port);
+console.info('' );
 http.createServer(app).listen(port);
 
 //http.createServer(app).listen(app.get('port'), 'localhost');

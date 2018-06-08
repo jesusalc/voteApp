@@ -1,29 +1,29 @@
 'use strict'
-
-module.exports = router => {
-    router.get('/sayings/:user', function (req, res) {
-        res.sendFile(path.join(__dirname + '/app/build/index.html'))
+import path from 'path'
+module.exports = (router, schemas)  => {
+    router.get('/sayings/:user', (req, res) => {
+        res.sendFile(path.join(__dirname + '/build/index.html'))
     })
 
     /**
      * Always serve the same HTML file for all requests
      */
 
-    router.get('/initializeSayings', function(req, res) {
+    router.get('/initializeSayings', (req, res) => {
         const initialSayings = require('../config/sayings.json')
 
-        Sayings.insertMany(initialSayings.sayings, (err, document) => {
+        schemas.Sayings.insertMany(initialSayings.sayings, (err, document) => {
             res.send(err)
         })
     })
 
-    router.get('/api/user', function (req, res) {
+    router.get('/api/user', (req, res) => {
         findUserByName(req.query.name)
             .then(foundUser => {
                 return foundUser
             }).then(user => {
                 if (user === null) {
-                    const user = new Users({
+                    const user = new schemas.Users({
                         name: req.query.name
                     })
                     return user.save().then(savedUser => {
@@ -36,16 +36,16 @@ module.exports = router => {
         })
     })
 
-    router.get('/api/sayings', function (req, res, next) {
+    router.get('/api/sayings', (req, res, next) => {
         findRatingsofUser(req.query.userId)
             .then((sayings) => {
                 const sayingIds = sayings.map((saying) => {
                     return saying.saying
                 })
-                Sayings.find({})
+                schemas.Sayings.find({})
                 .where('_id').nin(sayingIds)
                     .limit(25)
-                    .exec(function (err, sayings) {
+                    .exec( (err, sayings) => {
 
                         res.json({sayings, totalVoted: sayingIds.length})
                         res.end()
@@ -54,8 +54,8 @@ module.exports = router => {
 
     })
 
-    router.post('/api/rateSaying', function (req,res) {
-        const rating = new Ratings({
+    router.post('/api/rateSaying', (req,res) => {
+        const rating = new schemas.Ratings({
             rate: req.body.rate,
             user: req.body.user,
             saying: req.body.sayingId
