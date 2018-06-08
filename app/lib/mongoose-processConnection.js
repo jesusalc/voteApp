@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 import mongoose from 'mongoose'
 
 const processConnection = (collectionName, Schema) => {
