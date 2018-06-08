@@ -9,3 +9,4 @@ out
 gen
 .gitignore
 node_modules
+.env
