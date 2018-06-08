@@ -9,7 +9,7 @@ import http from 'http'
 import path from 'path'
 import mongoose from './app/middleware/obtain-connections'
 const app = express()
-const router = app.Router()
+
 
 app.set('port', 3000);
 
@@ -25,9 +25,9 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname + '/app/build')));
 
-const { findUserByName, findRatingsofUser } = require('../app/models');
+const { findUserByName, findRatingsofUser } = require('./app/models');
 
-require('./app/routes')(router);
+require('./app/routes')(app);
 
 /**
  * Start Server
