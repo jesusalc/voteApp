@@ -1,17 +1,17 @@
 'use strict'
 
-const findUserByName = (name) => {
+const findUserByName = (name, users) => {
    return new Promise((resolve, reject) => {
-       resolve(Users.findOne({ name : name }, '_id name', (err, user) => {
+       resolve(users.findOne({ name : name }, '_id name', (err, user) => {
            return user;
        }))
    });
 };
 
-const findRatingsofUser = (userId) => {
+const findRatingsofUser = (userId, ratings) => {
     return new Promise((resolve, reject) => {
         resolve(
-            Ratings.find({}).select('-_id saying').where('user').equals(userId).exec((err, ratings) => {
+            ratings.find({}).select('-_id saying').where('user').equals(userId).exec((err, ratings) => {
                 return ratings;
             })
         )

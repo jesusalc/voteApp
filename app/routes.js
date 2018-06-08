@@ -19,7 +19,7 @@ module.exports = (router, schemas, models)  => {
     })
 
     router.get('/api/user', (req, res) => {
-        models.findUserByName(req.query.name)
+        models.findUserByName(req.query.name, schemas.Users)
             .then(foundUser => {
                 return foundUser
             }).then(user => {
@@ -38,7 +38,7 @@ module.exports = (router, schemas, models)  => {
     })
 
     router.get('/api/sayings', (req, res, next) => {
-        models.findRatingsofUser(req.query.userId)
+        models.findRatingsofUser(req.query.userId, schemas.Ratings)
             .then((sayings) => {
                 const sayingIds = sayings.map((saying) => {
                     return saying.saying
