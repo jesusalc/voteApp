@@ -12,18 +12,17 @@ module.exports = (router, schemas, models)  => {
                             <head> \
                                 <meta charset="UTF-8"> \
                                 <title>Routes</title> \
-                                <link rel="stylesheet" href="/css/styles.css"> \
                             </head> \
                             <body> \
                             <div id="root"></div> \
                             '
         const routes =  [
-                            {"route" : '<a href="http://127.0.0.1:3000/">home</a>'},
-                            {"route" : '<a href="http://127.0.0.1:3000/initializeCollections">init db</a>'},
-                            {"route" : '<a href="http://127.0.0.1:3000/api/user">api/user</a>'},
-                            {"route" : '<a href="http://127.0.0.1:3000/api/pete">api/pete</a>'},
-                            {"route" : '<a href="http://127.0.0.1:3000/api/sayings">api/sayings</a>'},
-                            {"route" : '<a href="http://127.0.0.1:3000/api/rateSaying">api/rateSaying</a>'},
+                            {"route" : '<a href="http://127.0.0.1:3000/">get home</a>'},
+                            {"route" : '<a href="http://127.0.0.1:3000/initializeCollections">get init db</a>'},
+                            {"route" : '<a href="http://127.0.0.1:3000/api/user">get query name api/user</a>'},
+                            {"route" : '<a href="http://127.0.0.1:3000/sayings/pete">get sayings/pete</a>'},
+                            {"route" : '<a href="http://127.0.0.1:3000/api/sayings">get query userId api/sayings</a>'},
+                            {"route" : '<a href="http://127.0.0.1:3000/api/rateSaying">post body rate user sayingId api/rateSaying</a>'},
                         ]
 
         const temp_body = routes.map((route) => {
