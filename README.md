@@ -18,9 +18,10 @@ Server would be Listening on http://127.0.0.1:3000
 
 # Routes
 
-  get home
-  \,get init db
-  \,get query name api/user
-  \,get sayings/pete
-  \,get query userId api/sayings
-  \,post body rate user sayingId api/rateSaying
+  \,get  /                       start
+  \,get  /routes
+  \,get  /initializeCollections
+  \,get  /api/user               expects query.name
+  \,get  /sayings/pete
+  \,get  /api/sayings            expects query.userId
+  \,post /api/rateSaying         expects body.rate body.user body.sayingId
